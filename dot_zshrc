@@ -1,0 +1,67 @@
+# ~/.zshrc
+
+# ======================
+# History settings
+# ======================
+HISTSIZE=1000
+SAVEHIST=2000
+HISTFILE=~/.zsh_history
+
+# Options d'historique propres à Zsh (équivalent à ton bashrc)
+setopt hist_ignore_dups      # ignorer les doublons consécutifs
+setopt hist_ignore_all_dups  # efface les doublons dans l'historique
+setopt share_history         # partage l'historique entre sessions
+
+LOCAL_BIN=$HOME/.local/bin
+
+CLANGD=$HOME/.local/clangd_21.1.0/bin
+CLANGD_INDEXER=$HOME/.local/clangd_indexing_tools-linux-21.1.0/clangd_21.1.0/bin
+
+GO=$HOME/.local/go1.27.1.linux-amd64/go/bin
+
+export PATH=$LOCAL_BIN:$CLANGD:$GO:$PATH
+export EDITOR=vim
+export MANPATH=$HOME/.local/share/man:$MANPATH
+export NVM_DIR="$HOME/.local/nvm"
+
+export _ZO_DATA_DIR=$HOME/.local/.zoxide_data
+
+export ZSH="$HOME/.oh-my-zsh"
+ZSH_THEME=""
+plugins=(
+	git
+	zsh-autosuggestions
+	zoxide
+	extract
+)
+
+source $ZSH/oh-my-zsh.sh
+
+
+alias zshrc='vim ~/.zshrc'
+alias ll='ls -lh'
+alias la='ls -A'
+alias l='ls -CF'
+alias nv="navi"
+alias lg="lazygit"
+
+alias code="flatpak run com.visualstudio.code"
+
+# ======================
+# fzf integration
+# ======================
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# ======================
+# nvm integration
+# ======================
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+
+# ======================
+# Cargo environment
+# ======================
+[ -f "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
+
+eval "$(starship init zsh)"
+
+eval "$(zellij setup --generate-auto-start zsh)"
